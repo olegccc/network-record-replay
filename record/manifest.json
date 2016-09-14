@@ -1,0 +1,17 @@
+{
+   "author": "Oleg Gordeev",
+   "background": {
+      "persistent": true,
+      "scripts": [ "index.js" ]
+   },
+   "browser_action": {
+      "name": "Click to record network history"
+   },
+   "description": "Records all network history from Chrome tab to JSON file just in two clicks",
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkWygzYuaQONFcVScrPOmsqZUNc+NbLT7XSFykt7h6nWx5ajkJ9gRfYB3pFEDDAD6/rHh9wwy/JiZxxF6a8Av/AQ+cWdvwczKL4BcynQcIrlSRvlgxqXflgxF6o364vrT8+q+JJQ1JOZxnPKGQ0SyrIQnkWxoORaW2lOq21aiabxDBGPXXqlmcqA46lyxBnFuCbDCfKPmf07HkujWR4Yk1W9MWdcy3Z1L4/dOVgYz/juPX3VS90RDWCoGy4mBiCRc2u+zog36IAcoHieDX4BAZEP0B2zfgZPn5zGOBmcCA+6FrK5MMzK+kOregOijUhlSHumSLYHivxjPnVNxn2fDeQIDAQAB",
+   "manifest_version": 2,
+   "name": "Network Record",
+   "permissions": [ "webRequest", "<all_urls>", "debugger", "downloads", "notifications", "proxy" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.1"
+}
