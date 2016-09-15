@@ -1,8 +1,76 @@
-.root hr {
-  margin-top: 0.5em !important;
-  margin-bottom: 0.5em !important;
+html {
+  overflow: auto;
 }
 
-.manage > div {
-  margin: 1em 1em 1em 0;
+.section {
+
+  + .section {
+    margin-top: 2em;
+  }
+
+  margin-top: 1em;
+  position: relative;
+  padding: 5px;
+  border: solid 1px #ddd;
+  border-radius: 3px;
+
+  .body {
+    padding: 1.3em 1em 1em;
+  }
+
+  .header {
+    position: absolute;
+    top: -0.8em;
+    color: rgb(0, 188, 212);
+    font-size: 12pt;
+    margin-bottom: 1em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    background: white;
+  }
+}
+
+.manage .body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > div {
+    margin: 1em 1em 1em 0;
+  }
+}
+
+.status {
+  font-size: 12pt;
+}
+
+.pages {
+  .page {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.override-editor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+
+  & > *:not(:last-child) {
+    border-right: solid 0.5em transparent;
+  }
+
+  .method {
+    width: 6em !important;
+  }
+
+  .url {
+    flex: 1 1 auto;
+
+    & > div, & > div > div {
+      display: inherit !important;
+      width: inherit !important;
+    }
+  }
 }

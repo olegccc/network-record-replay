@@ -11,6 +11,7 @@ export default class Proxy {
 
     constructor(config) {
         this._config = config;
+        this._urls = {};
         this._processRecords(config.history);
     }
 
@@ -24,6 +25,14 @@ export default class Proxy {
     stop() {
         this._connection.stop();
         this._connection = null;
+    }
+
+    replaceOverride(override) {
+        this._config.override = override;
+    }
+
+    getUrls() {
+        return Object.keys(this._urls);
     }
 
     static _cleanPayload(text) {
@@ -66,7 +75,17 @@ export default class Proxy {
 
         record = record.items[index];
 
-        request.sendResponse(record.status, record.statusText, record.headers, record.body);
+        let override = null;
+
+        if (this._config.override) {
+            override = this._config.override.get('ALL:' + request.getUrl());
+
+            if (!override) {
+                override = this._config.override.get(request.getMethod() + ':' + request.getUrl());
+            }
+        }
+
+        request.sendResponse(record.status, record.statusText, record.headers, override ? override.get('file') : record.body);
     }
 
     _processRecord(record) {
@@ -92,7 +111,11 @@ export default class Proxy {
 
         let contentType = headers['content-type'] || '';
 
-        let key = record.request.method + ';' + this._replaceHttps(record.request.url);
+        let url = this._replaceHttps(record.request.url);
+
+        this._urls[url] = true;
+
+        let key = record.request.method + ';' + url;
 
         if (this._handlePayload(key)) {
             key += ';' + Proxy._cleanPayload(record.request.postData);

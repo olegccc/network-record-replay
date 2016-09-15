@@ -3,21 +3,29 @@ import React from 'react';
 import Configuration from './configuration';
 import Manage from './manage';
 import Status from './status';
+import Pages from './pages';
 import OverrideList from './overrideList';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Divider from 'material-ui/Divider';
+import {connect} from 'react-redux';
 
-export default () => {
+const Root = ({overrideMode}) => {
     return (
         <MuiThemeProvider>
             <div className="root">
                 <Configuration/>
-                <Divider/>
                 <Manage/>
-                <Divider/>
                 <Status/>
-                <OverrideList/>
+                <Pages/>
+                { overrideMode ? <OverrideList/> : ''}
             </div>
         </MuiThemeProvider>
     );
 };
+
+const mapStateToProps = (state) => {
+    return {
+        overrideMode: state.configuration.get('overrideMode')
+    };
+};
+
+export default connect(mapStateToProps)(Root);

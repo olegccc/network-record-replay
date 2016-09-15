@@ -5,7 +5,9 @@ const defaultState = new Map({
     overrideProxy: true,
     running: false,
     useDelays: false,
-    replaceHttps: true
+    replaceHttps: true,
+    overrideMode: false,
+    urls: []
 });
 
 function configurationReducer(state = defaultState, action) {
@@ -16,9 +18,15 @@ function configurationReducer(state = defaultState, action) {
         case ConfigurationActions.CONFIGURATION_STARTED:
             return state.set('running', true);
         case ConfigurationActions.CONFIGURATION_STOPPED:
-            return state.set('running', false);
+            return state
+                .set('running', false)
+                .set('urls', []);
         case ConfigurationActions.CONFIGURATION_TOGGLE_REPLACE_HTTPS:
             return state.set('replaceHttps', !state.get('replaceHttps'));
+        case ConfigurationActions.CONFIGURATION_TOGGLE_OVERRIDE:
+            return state.set('overrideMode', !state.get('overrideMode'));
+        case ConfigurationActions.CONFIGURATION_URL_LIST:
+            return state.set('urls', action.list);
     }
 
     return state;

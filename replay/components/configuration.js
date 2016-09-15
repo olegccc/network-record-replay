@@ -1,6 +1,7 @@
 import React from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import {connect} from 'react-redux';
+import Section from './section';
 import * as ConfigurationActions from '../actions/configuration';
 
 const Configuration = ({overrideProxy, replaceHttps, dispatch, disabled}) => {
@@ -14,10 +15,10 @@ const Configuration = ({overrideProxy, replaceHttps, dispatch, disabled}) => {
     }
 
     return (
-        <div>
+        <Section header="Configuration">
             <Checkbox disabled={disabled} label="Override Proxy" checked={overrideProxy} onCheck={toggleOverrideProxy}/>
             <Checkbox disabled={disabled} label="Replace HTTPS in data and URLs" checked={replaceHttps} onCheck={toggleReplaceHttps}/>
-        </div>
+        </Section>
     );
 };
 

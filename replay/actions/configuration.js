@@ -5,9 +5,11 @@ import selectFile from '../utilities/selectFile';
 import StringBuffer from '../utilities/stringBuffer';
 
 export const CONFIGURATION_TOGGLE_PROXY = 'CONFIGURATION_TOGGLE_PROXY';
+export const CONFIGURATION_TOGGLE_OVERRIDE = 'CONFIGURATION_TOGGLE_OVERRIDE';
 export const CONFIGURATION_STARTED = 'CONFIGURATION_STARTED';
 export const CONFIGURATION_STOPPED = 'CONFIGURATION_STOPPED';
 export const CONFIGURATION_TOGGLE_REPLACE_HTTPS = 'CONFIGURATION_TOGGLE_REPLACE_HTTPS';
+export const CONFIGURATION_URL_LIST = 'CONFIGURATION_URL_LIST';
 
 export function toggleOverrideProxy() {
     return dispatch => {
@@ -25,6 +27,25 @@ export function toggleReplaceHttps() {
     };
 }
 
+export function toggleOverrideMode() {
+    return async(dispatch, getState) => {
+        await dispatch({
+            type: CONFIGURATION_TOGGLE_OVERRIDE
+        });
+        let enabled = getState().configuration.get('overrideMode');
+        onOverrideChanged(enabled ? getState().override : null);
+    }
+}
+
+export function onOverrideChanged(override) {
+    if (proxy) {
+        proxy.replaceOverride(override);
+    }
+    return {
+        type: 'UNHANDLED'
+    };
+}
+
 let proxy = null;
 
 export function startProxy() {
@@ -32,7 +53,7 @@ export function startProxy() {
     return async(dispatch, getState) => {
 
         try {
-            const { configuration } = getState();
+            const { configuration, override } = getState();
 
             const overrideProxy = configuration.get('overrideProxy');
 
@@ -44,7 +65,13 @@ export function startProxy() {
                 history: body.history,
                 replaceHttps: configuration.get('replaceHttps'),
                 handlePayload: {},
-                useDelays: configuration.get('useDelays')
+                useDelays: configuration.get('useDelays'),
+                override
+            });
+
+            dispatch({
+                type: CONFIGURATION_URL_LIST,
+                list: proxy.getUrls()
             });
 
             const portNumber = await proxy.start();
