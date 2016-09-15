@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/olegccc/network-record-replay#readme",
   "devDependencies": {
+    "autoprefixer": "^6.4.1",
     "babel": "^6.5.2",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
@@ -38,7 +39,8 @@
     "postcss-loader": "^0.13.0",
     "precss": "^1.4.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "whatwg-fetch": "^1.0.0"
   },
   "dependencies": {
     "immutable": "^3.8.1",

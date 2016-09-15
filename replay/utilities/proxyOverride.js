@@ -1,6 +1,8 @@
 
 const networkRecordExtensionId = 'ihbkogfblhfbnompooimhejpkidoipcl';
 
+const OVERRIDE_ERROR = 'Network Record extension is not installed. Cannot override proxy settings. Please install the extension.';
+
 export function setOverride(portNumber) {
 
     const proxySettings = {
@@ -18,7 +20,7 @@ export function setOverride(portNumber) {
             setProxy: proxySettings
         }, response => {
             if (!response || !response.done) {
-                reject();
+                reject(OVERRIDE_ERROR);
             } else {
                 resolve();
             }
@@ -33,7 +35,7 @@ export function clearOverride() {
             resetProxy: true
         }, response => {
             if (!response || !response.done) {
-                reject('Network Record extension is not installed. Cannot override proxy settings. Please install the extension.');
+                reject(OVERRIDE_ERROR);
             } else {
                 resolve();
             }

@@ -79,6 +79,6 @@ export default class ProxyRequest {
     }
 
     sendStatus(status, statusText) {
-        this.sendResponse(status, statusText, { 'content-type': 'text/html' }, `<html><body>$(statusText)</body></html>`);
+        this.sendResponse(status, statusText, { 'content-type': 'text/html' }, '<html><body> ' + statusText + '</body></html>');
     }
 }

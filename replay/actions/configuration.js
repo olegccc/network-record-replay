@@ -59,6 +59,7 @@ export function startProxy() {
             });
 
             dispatch(StatusActions.setStatusMessage('Serving proxy at 127.0.0.1:' + portNumber));
+            dispatch(StatusActions.setStatusPages(body.pages));
 
         } catch (error) {
             dispatch(StatusActions.setStatusMessage(error));
@@ -67,15 +68,24 @@ export function startProxy() {
 }
 
 export function stopProxy() {
-    return dispatch => {
+    return async(dispatch, getState) => {
+
+        const { configuration } = getState();
+
+        const overrideProxy = configuration.get('overrideProxy');
 
         proxy.stop();
         proxy = null;
+
+        if (overrideProxy) {
+            await ProxyOverride.clearOverride();
+        }
 
         dispatch({
             type: CONFIGURATION_STOPPED
         });
 
         dispatch(StatusActions.setStatusMessage('Stopped'));
+        dispatch(StatusActions.setStatusPages([]));
     }
 }

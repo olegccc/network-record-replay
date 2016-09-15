@@ -1,24 +1,24 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
-const autoprefixer = require('autoprefixer');
-const precss = require('precss');
-const postcssImport = require('postcss-import');
-const fontMagician = require('postcss-font-magician');
-const colorGuard = require('colorguard');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var webpack = require('webpack');
+var path = require('path');
+var autoprefixer = require('autoprefixer');
+var precss = require('precss');
+var postcssImport = require('postcss-import');
+var fontMagician = require('postcss-font-magician');
+var colorGuard = require('colorguard');
 
-const sourcePath = path.join(__dirname, '..', 'replay');
-const buildPath = path.join(__dirname, '..', 'build/replay');
+var sourcePath = path.join(__dirname, '..', 'replay');
+var buildPath = path.join(__dirname, '..', 'build/replay');
 
-module.exports = (grunt, release) => {
+module.exports = function(grunt, release) {
 
-    let entries = [
+    var entries = [
         'babel-polyfill',
         'whatwg-fetch',
         './replay/index.js'
     ];
 
-    let ret = {
+    var ret = {
         entry: entries,
         output: {
             path: buildPath,
@@ -60,7 +60,7 @@ module.exports = (grunt, release) => {
             assets: false,
             colors: true
         },
-        postcss: webpack => [
+        postcss: function(webpack) { return [
             autoprefixer({ browsers: ['last 2 versions'] }),
             postcssImport({
                 addDependencyTo: webpack
@@ -68,13 +68,18 @@ module.exports = (grunt, release) => {
             precss,
             colorGuard,
             fontMagician
-        ]
+        ] }
     };
 
     if (release) {
         ret.plugins.push(new webpack.optimize.UglifyJsPlugin({
             sourceMap: false,
             mangle: true
+        }));
+        ret.plugins.push(new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
         }));
         ret.sourcemaps = false;
         ret.debug = false;
