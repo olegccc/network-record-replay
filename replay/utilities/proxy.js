@@ -1,5 +1,5 @@
-import StringBuffer from './utilities/stringBuffer';
-import ProxyConnection from './utilities/proxyConnection';
+import StringBuffer from './stringBuffer';
+import ProxyConnection from './proxyConnection';
 
 const CONTENT_TYPES = {
     css: 'text/css',
@@ -18,7 +18,7 @@ export default class Proxy {
         this._connection = new ProxyConnection({
             onReceive: this._onReceive.bind(this)
         });
-        this._connection.start();
+        return this._connection.start();
     }
 
     stop() {
@@ -107,7 +107,7 @@ export default class Proxy {
                 items: [],
                 index: 0
             };
-            requests[key] = request;
+            this._records[key] = request;
             requestCount++;
         }
 

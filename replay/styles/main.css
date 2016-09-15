@@ -1,0 +1,8 @@
+.root hr {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+.manage > div {
+  margin: 1em 1em 1em 0;
+}

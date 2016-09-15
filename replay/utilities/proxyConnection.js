@@ -13,11 +13,15 @@ export default class ProxyConnection {
     }
 
     start(port = 0, address = "127.0.0.1") {
-        TcpServer.create({}, (socketInfo) => {
-            this._serverSocketId = socketInfo.socketId;
-            TcpServer.listen(this._serverSocketId, address, port, () => {
-                TcpServer.getInfo(this._serverSocketId, (serverInfo) => {
-                    this._onServerInitialized(serverInfo.localPort);
+
+        return new Promise(resolve => {
+            TcpServer.create({}, (socketInfo) => {
+                this._serverSocketId = socketInfo.socketId;
+                TcpServer.listen(this._serverSocketId, address, port, () => {
+                    TcpServer.getInfo(this._serverSocketId, (serverInfo) => {
+                        this._onServerInitialized(serverInfo.localPort);
+                        resolve(serverInfo.localPort);
+                    });
                 });
             });
         });

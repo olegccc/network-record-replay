@@ -13,10 +13,10 @@ const buildPath = path.join(__dirname, '..', 'build/replay');
 module.exports = (grunt, release) => {
 
     let entries = [
-        'whatwg-fetch'
+        'babel-polyfill',
+        'whatwg-fetch',
+        './replay/index.js'
     ];
-
-    entries.push('./replay/index.js');
 
     let ret = {
         entry: entries,

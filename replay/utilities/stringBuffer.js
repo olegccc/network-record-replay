@@ -28,7 +28,7 @@ export default class StringBuffer {
     }
 
     static stringToArrayBuffer(string) {
-        let uintArray = stringToUint8Array(string);
+        let uintArray = StringBuffer.stringToUint8Array(string);
         let buffer = new ArrayBuffer(uintArray.byteLength);
         let view = new Uint8Array(buffer);
         view.set(uintArray, 0);
