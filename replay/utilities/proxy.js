@@ -78,10 +78,10 @@ export default class Proxy {
         let file = null;
 
         if (this._config.override) {
-            let override = this._config.override.get('ALL:' + request.getUrl());
+            let override = this._config.override.get(request.getMethod() + request.getUrl());
 
             if (!override) {
-                override = this._config.override.get(request.getMethod() + ':' + request.getUrl());
+                override = this._config.override.get('ALL:' + ':' + request.getUrl());
             }
 
             if (override) {
