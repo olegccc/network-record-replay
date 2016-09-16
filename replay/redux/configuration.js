@@ -25,6 +25,8 @@ function configurationReducer(state = defaultState, action) {
             return state.set('replaceHttps', !state.get('replaceHttps'));
         case ConfigurationActions.CONFIGURATION_TOGGLE_OVERRIDE:
             return state.set('overrideMode', !state.get('overrideMode'));
+        case ConfigurationActions.CONFIGURATION_TOGGLE_DELAYS:
+            return state.set('useDelays', !state.get('useDelays'));
         case ConfigurationActions.CONFIGURATION_URL_LIST:
             return state.set('urls', new List(action.list));
     }

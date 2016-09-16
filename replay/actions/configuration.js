@@ -5,6 +5,7 @@ import selectFile from '../utilities/selectFile';
 import StringBuffer from '../utilities/stringBuffer';
 
 export const CONFIGURATION_TOGGLE_PROXY = 'CONFIGURATION_TOGGLE_PROXY';
+export const CONFIGURATION_TOGGLE_DELAYS = 'CONFIGURATION_TOGGLE_DELAYS';
 export const CONFIGURATION_TOGGLE_OVERRIDE = 'CONFIGURATION_TOGGLE_OVERRIDE';
 export const CONFIGURATION_STARTED = 'CONFIGURATION_STARTED';
 export const CONFIGURATION_STOPPED = 'CONFIGURATION_STOPPED';
@@ -15,6 +16,14 @@ export function toggleOverrideProxy() {
     return dispatch => {
         dispatch({
             type: CONFIGURATION_TOGGLE_PROXY
+        });
+    };
+}
+
+export function toggleUseDelays() {
+    return dispatch => {
+        dispatch({
+            type: CONFIGURATION_TOGGLE_DELAYS
         });
     };
 }

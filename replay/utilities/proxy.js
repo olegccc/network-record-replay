@@ -89,7 +89,15 @@ export default class Proxy {
             }
         }
 
-        request.sendResponse(record.status, record.statusText, record.headers, file ? file : record.body);
+        function sendResponse() {
+            request.sendResponse(record.status, record.statusText, record.headers, file ? file : record.body);
+        }
+
+        if (this._config.useDelays && record.delay) {
+            setTimeout(sendResponse, record.delay);
+        } else {
+            sendResponse();
+        }
     }
 
     _processRecord(record) {
@@ -171,7 +179,8 @@ export default class Proxy {
             headers: record.response.headers,
             status: record.response.status,
             statusText: record.response.statusText || 'OK',
-            body: body
+            body: body,
+            delay: new Date(record.received).getTime()-new Date(record.created).getTime()
         });
 
         return requestCount;
