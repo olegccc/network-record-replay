@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import * as ConfigurationActions from '../actions/configuration';
 
 const defaultState = new Map({
@@ -7,7 +7,7 @@ const defaultState = new Map({
     useDelays: false,
     replaceHttps: true,
     overrideMode: false,
-    urls: []
+    urls: new List([])
 });
 
 function configurationReducer(state = defaultState, action) {
@@ -20,13 +20,13 @@ function configurationReducer(state = defaultState, action) {
         case ConfigurationActions.CONFIGURATION_STOPPED:
             return state
                 .set('running', false)
-                .set('urls', []);
+                .set('urls', new List([]));
         case ConfigurationActions.CONFIGURATION_TOGGLE_REPLACE_HTTPS:
             return state.set('replaceHttps', !state.get('replaceHttps'));
         case ConfigurationActions.CONFIGURATION_TOGGLE_OVERRIDE:
             return state.set('overrideMode', !state.get('overrideMode'));
         case ConfigurationActions.CONFIGURATION_URL_LIST:
-            return state.set('urls', action.list);
+            return state.set('urls', new List(action.list));
     }
 
     return state;

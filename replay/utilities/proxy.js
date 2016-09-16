@@ -75,17 +75,21 @@ export default class Proxy {
 
         record = record.items[index];
 
-        let override = null;
+        let file = null;
 
         if (this._config.override) {
-            override = this._config.override.get('ALL:' + request.getUrl());
+            let override = this._config.override.get('ALL:' + request.getUrl());
 
             if (!override) {
                 override = this._config.override.get(request.getMethod() + ':' + request.getUrl());
             }
+
+            if (override) {
+                file = override.get('file');
+            }
         }
 
-        request.sendResponse(record.status, record.statusText, record.headers, override ? override.get('file') : record.body);
+        request.sendResponse(record.status, record.statusText, record.headers, file ? file : record.body);
     }
 
     _processRecord(record) {

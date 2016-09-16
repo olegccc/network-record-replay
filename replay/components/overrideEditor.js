@@ -14,7 +14,8 @@ class OverrideEditor extends React.Component {
         super(props);
         this.state = {
             method: 'ALL',
-            url: ''
+            url: '',
+            disabled: true
         };
     }
 
@@ -23,14 +24,18 @@ class OverrideEditor extends React.Component {
     }
 
     onUrlChanged(url) {
-        this.setState({url});
+        this.setState({
+            url,
+            disabled: !url
+        });
     }
 
     onAddUrl() {
         this.props.dispatch(OverrideActions.overrideAddItem(this.state.method, this.state.url));
         this.setState({
             method: 'ALL',
-            url: ''
+            url: '',
+            disabled: true
         })
     }
 
@@ -51,7 +56,7 @@ class OverrideEditor extends React.Component {
                     />
                 </div>
                 <div>
-                    <RaisedButton label="Add" primary={true} onTouchTap={this.onAddUrl.bind(this)} />
+                    <RaisedButton disabled={this.state.disabled} label="Add" primary={true} onTouchTap={this.onAddUrl.bind(this)} />
                 </div>
             </div>
         );
@@ -59,8 +64,11 @@ class OverrideEditor extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+
+    let urls = state.configuration.get('urls');
+
     return {
-        pages:  state.configuration.get('urls')
+        pages: urls ? urls.toJS() : []
     };
 };
 
