@@ -20,9 +20,9 @@ const Configuration = ({overrideProxy, replaceHttps, dispatch, disabled, useDela
 
     return (
         <Section header="Configuration">
-            <Checkbox disabled={disabled} label="Override Proxy" checked={overrideProxy} onCheck={toggleOverrideProxy}/>
+            <Checkbox disabled={disabled} label="Automatically set Chrome proxy configuration" checked={overrideProxy} onCheck={toggleOverrideProxy}/>
             <Checkbox disabled={disabled} label="Replace HTTPS in data and URLs" checked={replaceHttps} onCheck={toggleReplaceHttps}/>
-            <Checkbox disabled={disabled} label="Replay delays" checked={useDelays} onCheck={toggleUseDelays} />
+            <Checkbox disabled={disabled} label="Respond with logged delays" checked={useDelays} onCheck={toggleUseDelays} />
         </Section>
     );
 };
