@@ -4,6 +4,7 @@ import {List, ListItem} from 'material-ui/List';
 import * as StatusActions from '../actions/status';
 import ContentCopyIcon from 'material-ui/svg-icons/content/content-copy';
 import Section from './section';
+import Proxy from '../utilities/proxy';
 
 function copyTextToClipboard(text) {
 
@@ -40,11 +41,21 @@ function copyTextToClipboard(text) {
     document.body.removeChild(textArea);
 }
 
-const Pages = ({pages}) => {
+const Pages = ({pages, replaceHttps}) => {
 
     function copyPage(page, event) {
+        if (replaceHttps) {
+            page = Proxy.replaceHttps(page);
+        }
         copyTextToClipboard(page);
         event.stopPropagation();
+    }
+
+    function showPage(page) {
+        if (replaceHttps) {
+            page = Proxy.replaceHttps(page);
+        }
+        StatusActions.showPage(page);
     }
 
     if (!pages.length) {
@@ -56,7 +67,7 @@ const Pages = ({pages}) => {
             <List>
                 { pages.map(page =>
                     <ListItem key={page}
-                              onTouchTap={StatusActions.showPage.bind(null, page)}
+                              onTouchTap={showPage.bind(null, page)}
                               rightIcon={<ContentCopyIcon onTouchTap={copyPage.bind(null, page)} />}
                     ><div className="page">{page}</div></ListItem>
                 )}
@@ -67,7 +78,8 @@ const Pages = ({pages}) => {
 
 const mapStateToProps = (state) => {
     return {
-        pages:  state.status.get('pages')
+        pages:  state.status.get('pages'),
+        replaceHttps: state.configuration.get('replaceHttps'),
     };
 };
 

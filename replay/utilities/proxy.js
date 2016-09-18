@@ -43,9 +43,13 @@ export default class Proxy {
         return this._config.handlePayload && this._config.handlePayload[key];
     }
 
+    static replaceHttps(text) {
+        return text.replace(/https:\/\//gi, "http://").replace(/"https"/gi, '"http"');
+    }
+
     _replaceHttps(text) {
         if (this._config.replaceHttps) {
-            return text.replace(/https:\/\//gi, "http://").replace(/"https"/gi, '"http"');
+            return Proxy.replaceHttps(text);
         }
         return text;
     }
