@@ -27,7 +27,7 @@ export default function openFile(extension) {
                 fileEntry.file((file) => {
                     var reader = new FileReader();
                     reader.onload = (e) => {
-                        resolve(e.target.result, path);
+                        resolve({ body: e.target.result, path });
                     };
                     reader.readAsArrayBuffer(file);
                 });

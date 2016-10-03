@@ -67,7 +67,7 @@ export function startProxy() {
             const overrideProxy = configuration.get('overrideProxy');
 
             let file = await selectFile('json');
-            let body = StringBuffer.uint8ToString(new Uint8Array(file));
+            let body = StringBuffer.uint8ToString(new Uint8Array(file.body));
             body = JSON.parse(body);
 
             proxy = new Proxy({
@@ -94,7 +94,7 @@ export function startProxy() {
                 portNumber
             });
 
-            dispatch(StatusActions.setStatusMessage('Serving proxy at 127.0.0.1:' + portNumber));
+            dispatch(StatusActions.setStatusMessage('Serving proxy at 127.0.0.1:' + portNumber + ', file: ' + file.path));
             dispatch(StatusActions.setStatusPages(body.pages));
 
         } catch (error) {
